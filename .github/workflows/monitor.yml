@@ -28,4 +28,6 @@ jobs:
       - name: Run monitor
         run: python advanced_monitor.py
         env:
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}  # Used for email notifications 
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}  # Used for email notifications
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }} 

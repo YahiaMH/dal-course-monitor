@@ -23,4 +23,6 @@ jobs:
       - name: Run email test
         run: python test_email.py
         env:
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }} 
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }} 
