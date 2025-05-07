@@ -1,0 +1,31 @@
+name: Dal Course Monitor
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Run every 5 minutes
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  check-course:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium webdriver-manager plyer
+          
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+          
+      - name: Run monitor
+        run: python advanced_monitor.py
+        env:
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }} 
