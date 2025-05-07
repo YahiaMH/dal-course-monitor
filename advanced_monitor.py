@@ -334,20 +334,26 @@ def check_for_changes():
 
 def main():
     print(f"Starting Dal Course Monitor for {COURSE_NAME} (CRN: {CRN_TO_MONITOR})")
-    print(f"Monitoring {VALUE_TO_MONITOR} value, checking every {CHECK_INTERVAL} seconds")
+    print(f"Monitoring {VALUE_TO_MONITOR} value")
     
     # Print notification method
     if EMAIL_ENABLED:
         print(f"Email notifications enabled - will send to {EMAIL_RECIPIENT}")
     
-    print("Press Ctrl+C to stop")
-    
-    try:
-        while True:
-            check_for_changes()
-            time.sleep(CHECK_INTERVAL)
-    except KeyboardInterrupt:
-        print("\nMonitor stopped by user.")
+    # Check if running in GitHub Actions
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        print("Running in GitHub Actions - performing a single check")
+        check_for_changes()
+    else:
+        # Only use the continuous loop when running locally
+        print(f"Running locally - checking every {CHECK_INTERVAL} seconds")
+        print("Press Ctrl+C to stop")
+        try:
+            while True:
+                check_for_changes()
+                time.sleep(CHECK_INTERVAL)
+        except KeyboardInterrupt:
+            print("\nMonitor stopped by user.")
 
 if __name__ == "__main__":
     main() 
